@@ -167,7 +167,31 @@
 
       <section id="cv" class="hidden scrollable-content bg-gray-50 p-6 rounded-lg shadow-inner">
         <h2 class="text-2xl font-bold text-green-700 mb-4 border-b-2 border-green-400 pb-2">السيرة الذاتية للدكتور أحمد رجب</h2>
-        <p class="text-gray-800">سيتم إضافة تفاصيل السيرة الذاتية لاحقًا.</p>
+        <div class="text-gray-800 space-y-3">
+          <p class="font-semibold">المعلومات الشخصية والمهنية:</p>
+          <ul class="list-disc list-inside space-y-1">
+            <li><strong class="text-indigo-600">المهنة الحالية:</strong> Pediatric Resident لدى Al Haram Hospital</li>
+            <li><strong class="text-indigo-600">التعليم:</strong> Doctor لدى طب القاهرة .. كلية طب القصر العيني</li>
+            <li><strong class="text-indigo-600">العمل السابق:</strong>
+              <ul class="list-circle list-inside ml-4">
+                <li>نائب مدير مستشفى الهرم التخصصي</li>
+                <li>Doctor (Dr) سابق لدى Al Arish, North Sinai</li>
+                <li>Pediatric Resident سابق لدى Nasser Institute Cancer Center</li>
+              </ul>
+            </li>
+            <li><strong class="text-indigo-600">الدراسة:</strong>
+              <ul class="list-circle list-inside ml-4">
+                <li>درس في al saad international school</li>
+                <li>درس في Cairo University</li>
+              </ul>
+            </li>
+            <li><strong class="text-indigo-600">محل الإقامة:</strong> مدينة الجيزة</li>
+            <li><strong class="text-indigo-600">المسقط الرأس:</strong> Mansourah, Ad Daqahliyah, Egypt</li>
+            <li><strong class="text-indigo-600">الحالة الاجتماعية:</strong> متزوج</li>
+          </ul>
+          <p class="font-semibold mt-4">للتواصل:</p>
+          <p class="text-lg">رقم الهاتف: <a href="tel:+201201686419" class="text-blue-600 hover:underline">٠١٢٠١٦٨٦٤١٩</a></p>
+        </div>
       </section>
 
       <section id="constituency-info" class="hidden scrollable-content bg-gray-50 p-6 rounded-lg shadow-inner">
@@ -181,6 +205,28 @@
       </section>
     </main>
   </div>
+
+  <footer class="text-center my-8 text-gray-600 text-sm">
+    <p>تصميم خالد محي الدين</p>
+    <div class="flex flex-col items-center justify-center mt-4">
+      <a href="https://www.facebook.com/drahmedraggab" target="_blank" rel="noopener noreferrer"
+         class="bg-blue-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out flex items-center">
+        <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+        </svg>
+        <span>صفحة الدكتور أحمد رجب على فيسبوك</span>
+      </a>
+      <div class="mt-4 w-full max-w-sm">
+        <form id="facebook-search-form" action="https://www.facebook.com/search/top/" method="GET" target="_blank" class="flex items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+          <input type="text" name="q" value="دكتور احمد رجب ابو الفتوح" placeholder="ابحث عن دكتور أحمد رجب في فيسبوك"
+                 class="flex-grow p-2 text-right border-none focus:ring-0 focus:outline-none placeholder-gray-500" aria-label="بحث في فيسبوك عن دكتور احمد رجب ابو الفتوح">
+          <button type="submit" class="bg-blue-500 text-white p-2 hover:bg-blue-600 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </footer>
 
   <div id="message-modal" class="modal">
     <div class="modal-content">
@@ -246,11 +292,11 @@
       // Get the electoral program text from the section
       const electoralProgramSection = document.getElementById('electoral-program');
       // Exclude the button and spinner from the text to be summarized
-      const programContentElements = electoralProgramSection.querySelectorAll('h2, p, h3, ul');
+      const programContentElements = electoralProgramSection.querySelectorAll('h2, p:not(.text-lg.font-semibold.text-gray-700.mb-4), h3, ul'); // Select all content except the general intro paragraph
       let programText = '';
       programContentElements.forEach(element => {
-        // Only include elements that are not the button or spinner's parent
-        if (!element.closest('.text-center') || (element.tagName === 'H2' || element.tagName === 'P')) {
+        // Ensure we're not grabbing the button or spinner's parent div text
+        if (!element.closest('.text-center')) {
             programText += element.textContent + '\n';
         }
       });
@@ -261,7 +307,11 @@
         let chatHistory = [];
         chatHistory.push({ role: "user", parts: [{ text: prompt }] });
         const payload = { contents: chatHistory };
-        const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+        // NOTE: For security and deployment, consider using a backend proxy
+        // to handle your API key securely, or use environment variables.
+        // For local development, you might place your key directly, but it's not recommended for production.
+        // You can obtain an API key from Google AI Studio: https://aistudio.google.com/
+        const apiKey = ""; // <--- ضع مفتاح API الخاص بك هنا
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
